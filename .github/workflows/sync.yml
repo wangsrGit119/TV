@@ -19,9 +19,26 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     steps:
+      - name: sync fork from remote
       - uses: tgymnich/fork-sync@v1.2.1
         with:
           github_token: ${{ secrets.MY_GIT_TOKEN }}
           owner: vamoschuck # fork 的上游仓库 user
           head: main # fork 的上游仓库 branch
           base: main # 本地仓库 branch
+
+  parse-data:
+    runs-on: ubuntu-latest
+    steps:
+        - name: checkout actions
+        - uses: actions/checkout@v1
+
+        - name: create file
+          run: |
+            ls -a
+            echo "结果" > result.txt
+            cat result.text
+
+        - name : push
+          run: |
+            ls -a
