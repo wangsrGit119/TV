@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Hello TV</title>
+		<script src="static/jquery-3.6.0.min.js" ></script>
+		<link href="static/videojs/video-js.css" rel="stylesheet">
+		<script src="static/videojs/video.js" type="text/javascript"></script>
+		<script src="static/videojs/videojs-contrib-hls.min.js" type="text/javascript"></script>
+
+
+		<!-- cdn引入ElementUI样式 -->
+		<link rel="stylesheet" href="static/element-ui/index.css">
+		<style type="text/css">
+			body{
+				padding: 0;
+				margin: 0;
+			}
+			.app{
+				width: 100%;
+				background-color: #eef0f8;
+				border-radius: 12px;
+				display: flex;
+				flex-direction: row;
+				/*border: 1px blue solid;*/
+			}
+			.left{
+				padding-left: 15px;
+				padding-top: 15px;
+				padding-bottom: 15px;
+				/*border: 1px red solid;*/
+				width: 15%;
+				height: calc(90vh);
+				overflow-y: hidden;
+				border-radius: 12px;
+				text-align: center;
+			}
+
+			.title{
+				line-height: 2;
+				margin: 6px 2px 6px 2px;
+				background-color: #ffffff;
+				border-radius: 12px;
+				box-shadow: 0px 5px 10px #f7f8fa;
+			}
+			.right{
+				height: calc(98vh);
+				width: 85%;
+				border-radius: 12px;
+			}
+			.videoElement{
+				background-color: #ffffff;
+				height: calc(85vh);
+				width: 95%;
+				/*border: 1px red solid;*/
+				margin: 20px 10px 10px 10px;
+				border-radius: 12px;
+			}
+			#videoElement{
+				width: 95%;
+				height: calc(85vh);
+			}
+			.video-js .vjs-tech {position: relative !important;}
+
+		</style>
+	</head>
+
+
+	<body>
+	<div id="app" class="app">
+		<div class="left" >
+			<div class="title" v-for="(item,index) in tvList" :key="index">
+				<i class="el-icon-video-camera-solid" @click="changePlay(item.link)">  {{item.title}}</i>
+			</div>
+		</div>
+		<div class="right">
+			<div class="videoElement">
+				<video id="videoElement" muted class="video-js vjs-default-skin vjs-big-play-centered" controls  data-setup='{}' style='width: 100%;'>
+				</video>
+			</div>
+		</div>
+	</div>
+
+<script src="static/vue.js"></script>
+	<!-- cdn引入ElementUI组件库 -->
+<script src="static/element-ui/index.js"></script>
+
+
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{
+			admin:false,
+			tvList:[],
+			player:{},
+			// playReadyUrl:"https://blog.wangsrbus.cn/190204084208765161.mp4"
+			// playReadyUrl:"http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel26/index.m3u8",
+			playReadyUrl:"http://117.169.121.162:6610/PLTV/88888910/224/3221225640/index.m3u8",
+
+		},
+		created: function (){
+			this.readTextFile()
+		},
+		methods:{
+			 readTextFile() {
+			 	const that = this
+				 that.tvList = []
+				var rawFile = new XMLHttpRequest();
+				rawFile.open("GET", "/.suke/line.txt", true);
+				rawFile.onreadystatechange = function() {
+					if (rawFile.readyState === 4) {
+						var allText = rawFile.responseText;
+						allText.trim().split('\n').forEach(function(v, i) {
+							v = v.trim()
+							let obj = {
+								title:v.split(":")[0],
+								link:v.split(":")[1]
+							}
+							if(obj.title){
+								that.tvList.push(obj);
+							}
+						})
+						that.readyPlay(that.playReadyUrl)
+					}
+				}
+				rawFile.send();
+			},
+			changePlay(url){
+				this.readyPlay(url)
+			},
+			readyPlay(vdoSrc) {
+				// vdoSrc = src
+				var myVideo = videojs('videoElement', {
+					bigPlayButton: true,
+					textTrackDisplay: false,
+					posterImage: false,
+					errorDisplay: false,
+					playbackRates: [0.5, 1, 1.5, 2],
+
+				})
+				if (/\.m3u8$/.test(vdoSrc)) { //判断视频源是否是m3u8的格式
+					myVideo.src({
+						src: vdoSrc,
+						type: 'application/x-mpegURL' //在重新添加视频源的时候需要给新的type的值
+					})
+				} else {
+					myVideo.src(vdoSrc)
+				}
+				myVideo.load();
+				myVideo.play();
+
+
+			}
+		}
+
+	})
+</script>
+
+
+	</body>
+</html>
