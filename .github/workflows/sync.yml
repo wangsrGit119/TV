@@ -33,8 +33,9 @@ jobs:
       - name: create file
         run: |
           ls -a
-          cat  M3U | awk '{match($0,"group-title=\"") ;print substr($0,RSTART+RLENGTH)}'  > ./me/format.txt
-          awk '{if(NR%2==0){printf $0 "\n"}else{printf "%s：",$0}}' ./me/format.txt  > /me/line.txt 
+          mkdir .suke
+          cat  M3U | awk '{match($0,"group-title=\"") ;print substr($0,RSTART+RLENGTH)}'  > ./.suke/format.txt
+          awk '{if(NR%2==0){printf $0 "\n"}else{printf "%s：",$0}}' ./.suke/format.txt  > /.suke/line.txt
           ls /me -a
       - name : push
         run: |
