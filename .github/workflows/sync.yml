@@ -41,7 +41,7 @@ jobs:
         uses: github-actions-x/commit@v2.9
         with:
           github-token: ${{ secrets.MY_GIT_TOKEN }}
-          push-branch: tv-1
+          push-branch: main
           commit-message: format data
           # Force push.
           force-push: true
