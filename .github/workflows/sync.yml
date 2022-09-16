@@ -25,3 +25,17 @@ jobs:
           owner: vamoschuck # fork 的上游仓库 user
           head: main # fork 的上游仓库 branch
           base: main # 本地仓库 branch
+
+  parse-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: create file
+        run: |
+          ls -a
+          echo "结果" > result.txt
+          cat result.text
+
+      - name : push
+        run: |
+          ls -a
