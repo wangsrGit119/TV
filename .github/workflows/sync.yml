@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: tgymnich/fork-sync@v1.2.1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.MY_GIT_TOKEN }}
           owner: vamoschuck # fork 的上游仓库 user
           head: main # fork 的上游仓库 branch
           base: main # 本地仓库 branch
