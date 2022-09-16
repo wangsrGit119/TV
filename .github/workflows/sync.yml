@@ -33,9 +33,9 @@ jobs:
       - name: create file
         run: |
           ls -a
-          echo "结果" > result.txt
-          cat result.text
-
+          cat  M3U | awk '{match($0,"group-title=\"") ;print substr($0,RSTART+RLENGTH)}'  > ./me/format.txt
+          awk '{if(NR%2==0){printf $0 "\n"}else{printf "%s：",$0}}' ./me/format.txt  > /me/line.txt 
+          ls /me -a
       - name : push
         run: |
           ls -a
