@@ -93,10 +93,9 @@
 		data:{
 			admin:false,
 			tvList:[],
-			player:{},
+			player:undefined,
 			// playReadyUrl:"https://blog.wangsrbus.cn/190204084208765161.mp4",
-			// playReadyUrl:"http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel26/index.m3u8",
-			playReadyUrl:"http://117.169.121.162:6610/PLTV/88888910/224/3221225640/index.m3u8",
+			playReadyUrl:"http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel26/index.m3u8",
 
 		},
 		created: function (){
@@ -131,7 +130,10 @@
 			},
 			readyPlay(vdoSrc) {
 				console.log("source ",vdoSrc)
-				var myVideo = videojs('videoElement', {
+				if(this.player){
+					this.player.reset()
+				}
+				this.player = videojs('videoElement', {
 					bigPlayButton: true,
 					textTrackDisplay: false,
 					posterImage: false,
@@ -139,17 +141,15 @@
 					playbackRates: [0.5, 1, 1.5, 2],
 				})
 				if (/\.m3u8$/.test(vdoSrc)) { //判断视频源是否是m3u8的格式
-					myVideo.src({
+					this.player.src({
 						src: vdoSrc,
 						type: 'application/x-mpegURL' //在重新添加视频源的时候需要给新的type的值
 					})
 				} else {
-					myVideo.src(vdoSrc)
+					this.player.src(vdoSrc)
 				}
-				myVideo.load();
-				myVideo.play();
-
-
+				this.player.load();
+				this.player.play();
 			}
 		}
 
