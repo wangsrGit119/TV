@@ -30,15 +30,15 @@ jobs:
   parse-data:
     runs-on: ubuntu-latest
     steps:
-        - name: checkout actions
-        - uses: actions/checkout@v1
+      - name: checkout actions
+      - uses: actions/checkout@v1
 
-        - name: create file
-          run: |
-            ls -a
-            echo "结果" > result.txt
-            cat result.text
+      - name: create file
+        run: |
+          ls -a
+          echo "结果" > result.txt
+          cat result.text
 
-        - name : push
-          run: |
-            ls -a
+      - name : push
+        run: |
+          ls -a
