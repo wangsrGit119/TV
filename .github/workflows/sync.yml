@@ -37,17 +37,17 @@ jobs:
           cat  M3U | awk '{match($0,"group-title=\"") ;print substr($0,RSTART+RLENGTH)}'  > ./.suke/format.txt
           awk '{if(NR%2==0){printf $0 "\n"}else{printf "%s：",$0}}' ./.suke/format.txt  > ./.suke/line.txt
           ls .suke -a
-      - name: Set SSH Environment
-          env:
-            DEPLOY_KEYS_PADDLE: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          run: |
-            mkdir -p ~/.ssh/
-            echo "$DEPLOY_KEYS_PADDLE" > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-            chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
-      - name : commit push
-        run: |
-          ls -a
-          git add .suke
-          git commit -m "update format line data"
-          git push orign main
+      - name: Git Commit and Push
+        uses: github-actions-x/commit@v2.9
+        with:
+          github-token: ${{ secrets.MY_GIT_TOKEN }}
+          push-branch: tv-1
+          commit-message: format data
+          # Force push.
+          force-push: true
+          # Specific files to add.
+          files: .suke
+          # Committer email. Default is ${name}@users.noreply.github.com
+          email: 1215618342@qq.com
+          # Committer name. Default is name of the person or app that initiated the workflow.
+          name: wangsrGit119
