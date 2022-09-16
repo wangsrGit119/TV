@@ -35,7 +35,7 @@ jobs:
           ls -a
           rm -rf ./.suke
           mkdir ./.suke
-          cat  M3U | awk '{match($0,"group-title=\"") ;print substr($0,RSTART+RLENGTH)}'  > ./.suke/format.txt
+          cat  M3U |tail -n +4 | awk '{match($0,"group-title=\"") ;print substr($0,RSTART+RLENGTH)}'  > ./.suke/format.txt
           awk '{if(NR%2==0){printf $0 "\n"}else{printf "%s：",$0}}' ./.suke/format.txt  > ./.suke/line.txt
           ls .suke -a
       - name: Git Commit and Push
