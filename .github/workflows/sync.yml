@@ -1,7 +1,6 @@
 name: Sync Fork
 
 on:
-  push: main
   schedule:
     - cron: '* */21 * * *'
   ## 手动
