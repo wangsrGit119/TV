@@ -37,7 +37,6 @@ jobs:
           ls -a
           rm -rf ./.suke
           mkdir ./.suke
-#          awk NF M3U > m3u.txt
           cat  m3u.txt |tail -n +2 | awk '{match($0,"group-title=") ;print substr($0,RSTART+RLENGTH)}'  > ./.suke/format.txt
           awk  '{if(NR%2==0){printf $0 "\n"}else{printf "%s,=",$0}}' ./.suke/format.txt  > ./.suke/line.txt
           cat ./.suke/line.txt | grep '121.51.249.6\|111.32.169.223\|live.shaoxing.com.cn\|kan0512.com\|live.sctvcloud.com\|pluslive.wrbtv.cn\|livestream.pbskids.org' > ./.suke/temp.txt
