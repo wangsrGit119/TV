@@ -56,7 +56,7 @@ jobs:
           # Force push.
           force-push: true
           # Specific files to add.
-          files: .suke .suke/format.txt .suke/line.txt
+          files: .suke .suke/format.txt .suke/line.txt back/*
           # Committer email. Default is ${name}@users.noreply.github.com
           email: 1215618342@qq.com
           # Committer name. Default is name of the person or app that initiated the workflow.
