@@ -209,13 +209,3 @@
 "江浙沪包邮",苏州生活资讯,=https://liveshowbak2.kan0512.com/norecord/ncsztv5_sd/playlist.m3u8
 "云贵川渝青",绵阳综合,=http://live.sctvcloud.com/live/mytvzh/playlist.m3u8
 "云贵川渝青",绵阳公共,=http://live.sctvcloud.com/live/mytvgg/playlist.m3u8
-http://pluslive.wrbtv.cn/xwzh/sd/live.m3u8,="黑吉辽蒙疆藏",乌兰察布经济生活
-http://pluslive.wrbtv.cn/wrbtv1/sd/live.m3u8,="黑吉辽蒙疆藏",乌兰察布生活频道
-http://pluslive.wrbtv.cn/wrbtv3/sd/live.m3u8,="黑吉辽蒙疆藏",达茂综合频道
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est.m3u8,="美国Local听力磨耳朵",PBS New York NY
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est.m3u8,="英语儿童频道",PBS Kids SD
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est_124.m3u8,="英语儿童频道",PBS Kids HD
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est_125.m3u8,="英语儿童频道",PBS Kids HD
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est_126.m3u8,="英语儿童频道",PBS Kids HD
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est_127.m3u8,="英语儿童频道",PBS Kids FHD
-https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est_128.m3u8,="英语儿童频道",Moonbug Kids
