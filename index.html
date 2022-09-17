@@ -6,7 +6,6 @@
 		<script src="static/jquery-3.6.0.min.js" ></script>
 		<link href="static/videojs/video-js.css" rel="stylesheet">
 		<script src="static/videojs/video.js" type="text/javascript"></script>
-		<script src="static/videojs/videojs-contrib-hls.min.js" type="text/javascript"></script>
 
 
 		<!-- cdn引入ElementUI样式 -->
@@ -18,20 +17,22 @@
 			}
 			.app{
 				width: 100%;
-				background-color: #eef0f8;
+				/*background-color: #eef0f8;*/
 				border-radius: 12px;
 				display: flex;
+				height: calc(100vh);
 				flex-direction: row;
+				background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
 				/*border: 1px blue solid;*/
 			}
 			.left{
 				padding-left: 15px;
 				padding-top: 15px;
 				padding-bottom: 15px;
-				/*border: 1px red solid;*/
+				min-width: 300px;
 				width: 15%;
-				height: calc(90vh);
-				overflow-y: hidden;
+				height: calc(95vh);
+				overflow-y: auto;
 				border-radius: 12px;
 				text-align: center;
 			}
@@ -70,13 +71,25 @@
 	<body>
 	<div id="app" class="app">
 		<div class="left" >
+			<el-select v-model="visitNode" @change="changeVisitNode" placeholder="请选择节点">
+				<el-option
+						v-for="(value,key) in tvMap"
+						:key="value.link"
+						:label="key"
+						:value="key">
+				</el-option>
+			</el-select>
 			<div class="title" v-for="(item,index) in tvList" :key="index">
 				<i class="el-icon-video-camera-solid" @click="changePlay(item.link)">  {{item.title}}</i>
 			</div>
 		</div>
 		<div class="right">
 			<div class="videoElement">
-				<video id="videoElement" muted class="video-js vjs-default-skin vjs-big-play-centered" controls  data-setup='{}' style='width: 100%;'>
+				<video id="videoElement"
+					   muted class="video-js  vjs-big-play-centered "
+					   controls
+					   preload="auto"
+					   data-setup='{}' style='width: 100%;'>
 				</video>
 			</div>
 		</div>
@@ -88,20 +101,30 @@
 
 
 <script>
+	window.HELP_IMPROVE_VIDEOJS = false;
+
 	var app = new Vue({
 		el:'#app',
 		data:{
 			admin:false,
 			tvList:[],
+			visitNode:undefined,
+			tvMap:new Map(),
 			player:undefined,
 			// playReadyUrl:"https://blog.wangsrbus.cn/190204084208765161.mp4",
-			playReadyUrl:"http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel26/index.m3u8",
+			playReadyUrl:"http://121.51.249.6/4403-tx.otvstream.otvcloud.com/otv/skcc/live/channel1/index.m3u8",
+			// playReadyUrl:"http://111.32.169.223/bkhlsliveali-cdn.ysp.cctv.cn/ysp/2000210103.m3u8",//央视频
+			// playReadyUrl:'https://livestream.pbskids.org/out/v1/1e3d77b418ad4a819b3f4c80ac0373b5/est_124.m3u8',
+
 
 		},
 		created: function (){
 			this.readTextFile()
 		},
 		methods:{
+			changeVisitNode(){
+				this.tvList = this.tvMap[this.visitNode]
+			},
 			 readTextFile() {
 			 	const that = this
 				 that.tvList = []
@@ -116,10 +139,22 @@
 								title:v.split(",\=")[0],
 								link:v.split(",\=")[1]
 							}
-							if(obj.title){
+							if(obj.title && obj.link.indexOf("index") <= 0){
 								that.tvList.push(obj);
 							}
 						})
+						that.tvMap =  that.tvList.reduce((group, ele) => {
+							let arr = ele.title.split(",");
+							let category = arr[0]
+							let value = {
+								title:arr[1],
+								link: ele.link
+							}
+							group[category] = group[category] ?? []
+							group[category].push(value)
+							return group
+						},{});
+						console.log(that.tvMap)
 						that.readyPlay(that.playReadyUrl)
 					}
 				}
@@ -132,13 +167,21 @@
 				console.log("source ",vdoSrc)
 				if(this.player){
 					this.player.reset()
+					this.player = null
 				}
 				this.player = videojs('videoElement', {
 					bigPlayButton: true,
 					textTrackDisplay: false,
 					posterImage: false,
+					preload: 'auto',
 					errorDisplay: false,
 					playbackRates: [0.5, 1, 1.5, 2],
+					notSupportedMessage:'该视频格式不支持播放，请选择其他视频',
+					preferFullWindow:true,
+				},function onPlayerReady() {
+					videojs.log('Your player is ready!');
+					// In this context, `this` is the player that was created by Video.js.
+					this.play();
 				})
 				if (/\.m3u8$/.test(vdoSrc)) { //判断视频源是否是m3u8的格式
 					this.player.src({
@@ -149,7 +192,6 @@
 					this.player.src(vdoSrc)
 				}
 				this.player.load();
-				this.player.play();
 			}
 		}
 
