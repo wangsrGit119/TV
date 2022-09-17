@@ -36,7 +36,7 @@ jobs:
         run: |
           ls -a
           version=`date +%Y%m%d`
-          mv ./.suke/line.txt ./back/version-line.txt
+          mv ./.suke/line.txt ./back/$version-line.txt
           rm -rf ./.suke
           mkdir ./.suke
           awk NF M3U > m3u.txt
