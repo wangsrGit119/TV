@@ -1,6 +1,8 @@
 name: Sync Fork
 
 on:
+  push:
+    branches: [ "main" ]
   schedule:
     - cron: '* */21 * * *'
   ## 手动
@@ -41,6 +43,7 @@ jobs:
           cat ./.suke/line.txt | grep '121.51.249.6\|111.32.169.223\|stream.wfcmw.cn\|live.rzw.com.cn\|bestvcdn.com.cn\|live.shaoxing.com.cn\|hw-m-l.cztv.com\|l.cztvcloud.com\|kan0512.com\|xiancity.cn\|live.migucloud.com\|live.sctvcloud.com\|pluslive.wrbtv.cn\|livestream.pbskids.org' > ./.suke/temp.txt
           mv ./.suke/temp.txt ./.suke/line.txt
           ls .suke -a
+          cat ./.suke/line.txt
       - name: Git Commit and Push
         uses: github-actions-x/commit@v2.9
         with:
@@ -50,7 +53,7 @@ jobs:
           # Force push.
           force-push: true
           # Specific files to add.
-          files: .suke
+          files: .suke .suke/format.txt .suke/line.txt
           # Committer email. Default is ${name}@users.noreply.github.com
           email: 1215618342@qq.com
           # Committer name. Default is name of the person or app that initiated the workflow.
